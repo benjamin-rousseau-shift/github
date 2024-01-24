@@ -8,8 +8,33 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos> 
     ];
- 
+  home-manager.users.heavenlyren = { pkgs, ... }: {
+  home.packages = [ ];
+  programs.git = {
+    enable = true;
+    userName  = "Heavenly Ren";
+    userEmail = "heavenlyren@gmail.com";
+  };
+  programs.kitty = {
+    enable = true;
+    settings = {
+      dynamic_background_opacity = true;
+    };
+  };
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+
+  };
+
+  # The state version is required and should stay at the version you
+  # originally installed.
+  home.stateVersion = "23.11";
+  };
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -83,6 +108,8 @@
   services.xserver.libinput.enable = true;
 
   # Define a user acservices.xserver.libinput.naturalScrolling = true;count. Don't forget to set a password with ‘passwd’.
+  users.defaultUserShell = pkgs.fish;
+
   users.users.heavenlyren = {
     isNormalUser = true;
     description = "heavenlyren";
@@ -104,9 +131,13 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+   fish
+   kitty
    neovim
   ];
-
+  programs.fish = {
+    enable = true;
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
